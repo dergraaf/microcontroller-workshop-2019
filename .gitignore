@@ -1,0 +1,4 @@
+*.pyc
+.sconsign.dblite
+project.xml.log
+**/build

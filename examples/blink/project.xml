@@ -1,0 +1,16 @@
+<library>
+  <repositories>
+    <repository>
+      <path>../../ext/modm/repo.lb</path>
+    </repository>
+  </repositories>
+  <extends>modm:black-pill</extends>
+  <options>
+    <option name="modm:build:build.path">build</option>
+  </options>
+  <modules>
+    <module>modm:build:scons</module>
+    <module>modm:platform:uart:1</module>
+    <module>modm:io</module>
+  </modules>
+</library>
