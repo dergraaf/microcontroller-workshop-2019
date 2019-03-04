@@ -13,6 +13,6 @@ build:
 	scons -j4 bin
 
 program: build
-	dfu-util -d 1eaf:0003 -a 2 -D build/release/blink.bin -R
+	dfu-util -d 1eaf:0003 -a 2 -D build/release/display.bin -R
 
 .PHONY : prepare build program

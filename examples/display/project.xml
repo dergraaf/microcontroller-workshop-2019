@@ -1,0 +1,20 @@
+<library>
+  <repositories>
+    <repository>
+      <path>../../ext/modm/repo.lb</path>
+    </repository>
+  </repositories>
+  <extends>modm:black-pill</extends>
+  <options>
+    <option name="modm:build:build.path">build</option>
+    <option name="modm:platform:cortex-m:linkerscript.flash_offset">0x2000</option>
+  </options>
+  <modules>
+    <module>modm:build:scons</module>
+    <module>modm:platform:uart:1</module>
+    <module>modm:platform:spi:2</module>
+    <module>modm:io</module>
+    <module>modm:driver:max7219</module>
+    <module>modm:ui:button</module>
+  </modules>
+</library>
