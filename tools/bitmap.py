@@ -33,6 +33,7 @@ template_header = """
 #define ${include_guard}
 
 #include <stdint.h>
+#include <modm/architecture/interface/accessor.hpp>
 
 namespace bitmap
 {
@@ -51,6 +52,8 @@ extern constexpr uint8_t ${name}[${array_length}] =
     ${width}, ${height},
     ${array}
 };
+
+static auto ${name}_accessor = modm::accessor::Flash<uint8_t>(${name});
 }
 
 #endif

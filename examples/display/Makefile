@@ -15,4 +15,18 @@ build:
 program: build
 	dfu-util -d 1eaf:0003 -a 2 -D build/release/display.bin -R
 
+PBM_TOOL = ../../tools/bitmap.py
+IMAGES_IN  = $(wildcard images/*.pbm)
+IMAGES_OUT = $(IMAGES_IN:images/%.pbm=images/%.hpp)
+
+convert: $(IMAGES_OUT)
+images/%.hpp: images/%.pbm
+	python3 $(PBM_TOOL) "$<" "$@"
+
+clean:
+	$(RM) -r build/*
+
+clean-images:
+	$(RM) $(IMAGES_OUT)
+
 .PHONY : prepare build program

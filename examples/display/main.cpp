@@ -17,6 +17,9 @@
 
 #include "dot_matrix_max7219_horizontal.hpp"
 
+#include "images/space_invader.hpp"
+#include "images/space_invader_2.hpp"
+
 using Led = GpioInverted<GpioOutputB12>;
 
 using Cs = GpioOutputA8;
@@ -92,7 +95,7 @@ main()
     uint8_t x = 0;
     uint8_t y = 0;
 
-    uint8_t intensity = 0;
+    uint8_t intensity = 1;
 
     const uint8_t maxX = display.getWidth() - 1;
     const uint8_t maxY = display.getHeight() - 1;
@@ -103,37 +106,59 @@ main()
     {
         if (timerDisplay.execute())
         {
-            display.clear();
-            display.drawLine(modm::glcd::Point(x, y),
-                             modm::glcd::Point(maxX - x, maxY - y));
-            display.update();
+            if (intensity > 0)
+            {
+                display.clear();
+                display.drawLine(modm::glcd::Point(x, y),
+                                 modm::glcd::Point(maxX - x, maxY - y));
+                display.update();
 
-            if (x == 0)
-            {
-                if (++y == maxY)
+                if (x == 0)
                 {
-                    ++x;
+                    if (++y == maxY)
+                    {
+                        ++x;
+                    }
+                }
+                else if (x == maxX)
+                {
+                    if (--y == 0)
+                    {
+                        --x;
+                    }
+                }
+                else if (y == 0)
+                {
+                    if (--x == 0)
+                    {
+                        ++y;
+                    }
+                }
+                else if (y == maxY)
+                {
+                    if (++x == maxX)
+                    {
+                        --y;
+                    }
                 }
             }
-            else if (x == maxX)
+            else
             {
-                if (--y == 0)
+                static uint8_t counter = 0;
+
+                ++counter;
+                if (counter == 5)
                 {
-                    --x;
+                    display.clear();
+                    display.drawImage({2, 0}, bitmap::space_invader_accessor);
+                    display.update();
                 }
-            }
-            else if (y == 0)
-            {
-                if (--x == 0)
+                else if (counter == 10)
                 {
-                    ++y;
-                }
-            }
-            else if (y == maxY)
-            {
-                if (++x == maxX)
-                {
-                    --y;
+                    counter = 0;
+                    display.clear();
+                    display.drawImage({2, 0}, bitmap::space_invader_2_accessor);
+                    display.update();
                 }
             }
         }
@@ -154,7 +179,7 @@ main()
 
             if (buttons.isPressed(buttons.BUTTON1))
             {
-                if (intensity > 1)
+                if (intensity > 0)
                 {
                     Led::set();
                     display.setBrightness(--intensity);
