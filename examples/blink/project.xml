@@ -7,10 +7,10 @@
   <extends>modm:black-pill</extends>
   <options>
     <option name="modm:build:build.path">build</option>
+    <option name="modm:platform:cortex-m:linkerscript.flash_offset">0x2000</option>
   </options>
   <modules>
     <module>modm:build:scons</module>
-    <module>modm:platform:uart:1</module>
     <module>modm:io</module>
   </modules>
 </library>
